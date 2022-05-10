@@ -20,8 +20,8 @@ export const LoginScreen = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { isLoggedIn } = useSelector((state) => state.auth);
-  const { message } = useSelector((state) => state.message);
+  const { isLoggedIn } = useSelector(state => state.auth);
+  const { message } = useSelector(state => state.message);
 
   const dispatch = useDispatch();
   const onChangeUsername = (e) => {
@@ -63,7 +63,7 @@ export const LoginScreen = (props) => {
 
   return (
     <div className="col-md-12">
-      <div className="card card container">
+      <div className="card card-container">
         <img
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
           alt="profile-img"
