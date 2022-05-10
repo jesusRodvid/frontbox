@@ -40,7 +40,7 @@ export const register = (username, password) => (dispatch) => {
   );
 };
 
-export const login = (usernam, password) => (dispatch) => {
+export const login = (username, password) => (dispatch) => {
   return AuthService.login(username, password).then(
     (data) => {
       dispatch({

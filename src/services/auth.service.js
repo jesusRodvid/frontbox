@@ -29,7 +29,7 @@ const getAdminSectionSuppliers = () => {
 
 }
 
-export default {
+const exportObject =  {
 
     getPublicContent,
     getAdminSection,
@@ -37,6 +37,8 @@ export default {
     getAdminSectionSuppliers,
 
 }
+
+export default exportObject;
 
 
 
