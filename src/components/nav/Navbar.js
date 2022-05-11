@@ -42,6 +42,13 @@ export const Navbar = () => {
                     >
                         Search
                     </NavLink>
+                    <NavLink 
+                        className="nav-item nav-link" 
+                        to="/addItem"
+                    >
+                        Additem
+                    </NavLink>
+                    
                 </div>
             </div>
 

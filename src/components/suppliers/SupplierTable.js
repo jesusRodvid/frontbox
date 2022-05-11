@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SupplierService from '../services/SuppliersService';
 
-import { Table } from 'reactstrap';
+import { Table } from 'react-bootstrap';
 
 const SuppliersTable = () => {
 

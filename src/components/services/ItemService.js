@@ -1,23 +1,23 @@
-import axios from "axios";
+import axios from "../../http-commons";
 
 const createItems = (data) => {
-    return axios.post("/createItems", data);
+    return axios.post("/items/createItems", data);
   };
   
   const getAllItems = () => {
-    return axios.get("/getAllItems");
+    return axios.get("/items/getAllItems");
   };
   
   const getItemsById = id => {
-    return axios.get(`/getItemsById/?id=${id}`);
+    return axios.get(`/items/getItemsById/?id=${id}`);
   };
   
   const updateItem = (data,id) => {
-    return axios.put(`/updateItem/?id=${id}`, data);
+    return axios.put(`/items/updateItem/?id=${id}`, data);
   };
 
   const deleteItem = (id) => {
-    return axios.delete(`/deleteItem/?id=${id}`);
+    return axios.delete(`/items/deleteItem/?id=${id}`);
   };
   
   // eslint-disable-next-line import/no-anonymous-default-export

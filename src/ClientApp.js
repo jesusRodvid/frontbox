@@ -6,7 +6,6 @@ export const ClientApp = () => {
     return (
         <div>
             <AppRouter />
-
         </div>
     )
 }
