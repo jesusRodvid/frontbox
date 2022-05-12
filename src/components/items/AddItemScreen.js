@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ItemService from "../services/ItemService";
 import { toast } from "react-toastify";
@@ -10,15 +10,16 @@ import {
   Col,
   Card,
   Form,
-
   InputGroup,
   Button,
 } from "react-bootstrap";
-
+import UserService from "../services/UserService";
 import { ItemsDiscount } from "./ItemsDiscount";
 import { ItemsWSuppliers } from "./ItemsWSuppliers";
 
 export const AddItemScreen = () => {
+  const [allUsers, setAllUsers] = useState([]);
+
   const [item, setItem] = useState({
     description: "",
     price: "",
@@ -26,14 +27,39 @@ export const AddItemScreen = () => {
     suppliers: [],
     creationDate: "",
     discounts: [],
+    creator: "",
   });
 
   const [validated, setValidated] = useState(false);
   const history = useNavigate();
 
+  const retrieveUsers = () => {
+    UserService.getAllSuppliers()
+      .then((response) => {
+        setAllUsers(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setItem({ ...item, [name]: value });
+  };
+  //recoge el id del usuario seleccionado en el checkbox
+  const handleChange = (event) => {
+    const user = allUsers.find(
+      (idUser) => idUser.idUser === parseInt(event.target.id)
+    );
+
+    handleUserChange(user);
+    console.log(event.target.id);
+  };
+
+  const handleUserChange = (user) => {
+    console.log(user);
+    setItem({ ...item, creator: { idUser: user.idUser } });
   };
 
   const handleSuppliersChange = (supplier) => {
@@ -50,6 +76,10 @@ export const AddItemScreen = () => {
   const handlePriceReductionsChange = (discount) => {
     setItem({ ...item, discounts: [...item.discounts, discount] });
   };
+
+  useEffect(() => {
+    retrieveUsers();
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -89,7 +119,7 @@ export const AddItemScreen = () => {
             <Col>
               <Form.Group className="mb-3">
                 <Form.Label>Item price</Form.Label>
-                <InputGroup >
+                <InputGroup>
                   <Form.Control
                     required
                     type="number"
@@ -131,29 +161,33 @@ export const AddItemScreen = () => {
               <Form.Group controlId="formBasicSelect">
                 <Form.Label>Status</Form.Label>
                 <InputGroup hasValidation>
-                <Form.Select
-                  required
-                  as="select"
-                  name="state"
-                  value={item.state}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Choose an option</option>
-                  <option value="ACTIVE">ACTIVE</option>
-                  <option value="INACTIVE">INACTIVE</option>
-                </Form.Select>
+                  <Form.Select
+                    required
+                    as="select"
+                    name="state"
+                    value={item.state}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Choose an option</option>
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="INACTIVE">INACTIVE</option>
+                  </Form.Select>
                 </InputGroup>
-                
               </Form.Group>
             </Col>
           </Row>
           <Row>
             <Col>
-              <Form.Group >
-              <Form.Label>Creation Date</Form.Label>
-              <Form.Control required type="date" name='creationDate' format='dd/mm/yyyy'
-  
-  value={item.creationDate}  onChange={handleInputChange} />
+              <Form.Group>
+                <Form.Label>Creation Date</Form.Label>
+                <Form.Control
+                  required
+                  type="date"
+                  name="creationDate"
+                  format="dd/mm/yyyy"
+                  value={item.creationDate}
+                  onChange={handleInputChange}
+                />
               </Form.Group>
             </Col>
           </Row>
@@ -166,6 +200,20 @@ export const AddItemScreen = () => {
             handlePriceReductionsChange={handlePriceReductionsChange}
             priceReductions={item.discounts}
           />
+          
+          <Form.Label>Who is creating the Item?</Form.Label>
+
+            {allUsers.map((user, key) => (
+              <Form.Check
+                key={key}
+                id={user.idUser}
+                name={user.name}
+                value={user.id}
+                type="checkbox"
+                label={user.name}
+                onChange={handleChange}
+              />
+            ))}
 
           <Row>
             <Form.Group>
