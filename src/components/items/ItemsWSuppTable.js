@@ -3,7 +3,7 @@ import { Table} from "react-bootstrap";
 
 
 export const ItemsWSuppTable = ({suppliers}) => {
-    
+
     return(
         <Table responsive striped bordered hover variant="light" size="sm">
             <thead>
@@ -13,8 +13,8 @@ export const ItemsWSuppTable = ({suppliers}) => {
                 </tr>
             </thead>
             <tbody>
-                {suppliers && suppliers.map((supplier) => (
-                <tr key={supplier.idSupplier}>
+                {suppliers && suppliers.map((supplier, key) => (
+                <tr key={key}>
                     <td>{supplier.name}</td>
                     <td>{supplier.country}</td>
                 </tr>

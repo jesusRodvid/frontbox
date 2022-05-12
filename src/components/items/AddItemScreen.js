@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ItemService from "../services/ItemService";
-
 import { toast } from "react-toastify";
 import Toast from "../alerts/alert";
 import "react-toastify/dist/ReactToastify.css";
-
 import {
   Container,
   Row,
   Col,
   Card,
   Form,
-  FormControl,
+
   InputGroup,
   Button,
 } from "react-bootstrap";
@@ -23,9 +21,10 @@ import { ItemsWSuppliers } from "./ItemsWSuppliers";
 export const AddItemScreen = () => {
   const [item, setItem] = useState({
     description: "",
-    price: undefined,
+    price: "",
     state: "",
     suppliers: [],
+    creationDate: "",
     discounts: [],
   });
 
@@ -90,11 +89,11 @@ export const AddItemScreen = () => {
             <Col>
               <Form.Group className="mb-3">
                 <Form.Label>Item price</Form.Label>
-                <InputGroup hasValidation>
-                  <FormControl
+                <InputGroup >
+                  <Form.Control
+                    required
                     type="number"
-                    min="0.01"
-                    step="any"
+                    min="0.00"
                     value={item.price}
                     name="price"
                     onChange={handleInputChange}
@@ -113,6 +112,7 @@ export const AddItemScreen = () => {
               <Form.Group className="mb-3">
                 <Form.Label>Item description</Form.Label>
                 <Form.Control
+                  required
                   as="textarea"
                   rows={3}
                   name="description"
@@ -130,16 +130,30 @@ export const AddItemScreen = () => {
             <Col>
               <Form.Group controlId="formBasicSelect">
                 <Form.Label>Status</Form.Label>
+                <InputGroup hasValidation>
                 <Form.Select
+                  required
                   as="select"
                   name="state"
                   value={item.state}
                   onChange={handleInputChange}
                 >
+                  <option value="">Choose an option</option>
                   <option value="ACTIVE">ACTIVE</option>
                   <option value="INACTIVE">INACTIVE</option>
-                  
                 </Form.Select>
+                </InputGroup>
+                
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group >
+              <Form.Label>Creation Date</Form.Label>
+              <Form.Control required type="date" name='creationDate' format='dd/mm/yyyy'
+  
+  value={item.creationDate}  onChange={handleInputChange} />
               </Form.Group>
             </Col>
           </Row>

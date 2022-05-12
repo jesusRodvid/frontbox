@@ -19,10 +19,10 @@ export const ItemsWSuppliers = ({handleSuppliersChange, suppliers}) => {
     };
 
     const handleChange = (event) => {
-        const supplier = allSuppliers.find(element=> element.id === event.target.idSupplier);
+        const supplier = allSuppliers.find(idSupplier=> idSupplier.idSupplier  ===  parseInt(event.target.id));
+        
         handleSuppliersChange(supplier)
-        console.log(supplier);
-
+        console.log(event.target.id);
     }
 
     useEffect(() => { 
@@ -41,7 +41,7 @@ export const ItemsWSuppliers = ({handleSuppliersChange, suppliers}) => {
                     handleShow(true)}
                     >
                     <BsPlusLg size=".6rem" />{" "}
-                    <span className="p-1">Associate suppliers</span>
+                    <span className="p-1">Select suppliers</span>
                 </Button>{" "}
                 </Col>
             </Row>
@@ -60,19 +60,16 @@ export const ItemsWSuppliers = ({handleSuppliersChange, suppliers}) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        {allSuppliers.map((supplier) =>
+                        {allSuppliers.map((supplier, key) =>
                             <Form.Check 
-                                key={supplier.idSupplier} 
+                                key={key} 
                                 id={supplier.idSupplier}
                                 name={supplier.name} 
                                 country={supplier.country}
                                 label={supplier.name} 
                                 type="checkbox"
-                                value={supplier.idSupplier}
                                 onChange={handleChange}
-                                defaultChecked={suppliers && suppliers.find(element => element.id === supplier.idSupplier) &&
-                                    "checked"
-                                }
+                               
                             />
                         )}
                     </Form>
